@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CalculadoraWPF.Controller;
+using CalculadoraWPF.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -204,24 +206,14 @@ namespace CalculadoraWPF
             CalculoAuxiliar.Content += CalculoExibicao.Text + "=";
             Denominador = double.Parse(CalculoExibicao.Text);
 
-            double ContaFinal = 0;
+            var requisicao = new CalculoRequest(Numerador, Denominador, Operador);
+            var ContaFinal = new CalculoController().Calcular(requisicao);
 
-            if (Operador == "+")
+            if(ContaFinal == null)
             {
-                ContaFinal = Numerador + Denominador;
+                return;
             }
-            else if (Operador == "-")
-            {
-                ContaFinal = Numerador - Denominador;
-            }
-            else if (Operador == "*")
-            {
-                ContaFinal = Numerador * Denominador;
-            }
-            else if (Operador == "/")
-            {
-                ContaFinal = Numerador / Denominador;
-            }
+
             CalculoExibicao.Text = ContaFinal.ToString();
 
             Operador = null;
